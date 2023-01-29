@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js' integrity='sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==' crossorigin='anonymous' referrerpolicy='no-referrer'></script>
+  <script src='../node_modules/node-mermaid/store/client/app-transport-channel.js'></script>
+  <title>Document</title>
+</head>
+<body>
+  <br />
+  <div>
+    <div>Chaturbate</div>
+    <input type="text" id="cb-message-input" />
+    <button type="button" id="cb-send-button">send</button>
+  </div>
+  <br />
+  <div>
+    <div>BongaCams</div>
+    <input type="text" id="bc-message-input" />
+    <button type="button" id="bc-send-button">send</button>
+  </div>
+  <br />
+  <div>
+    <div>xHamsterLive</div>
+    <input type="text" id="xhl-message-input" />
+    <button type="button" id="xhl-send-button">send</button>
+  </div>
+  <br />
+  <div>
+    <div>Stripchat</div>
+    <input type="text" id="sc-message-input" />
+    <button type="button" id="sc-send-button">send</button>
+  </div>
+
+  <script>
+    const cbMessageInput = document.querySelector('#cb-message-input')
+        , cbSendButton = document.querySelector('#cb-send-button')
+        , bcMessageInput = document.querySelector('#bc-message-input')
+        , bcSendButton = document.querySelector('#bc-send-button')
+        , xhlMessageInput = document.querySelector('#xhl-message-input')
+        , xhlSendButton = document.querySelector('#xhl-send-button')
+        , scMessageInput = document.querySelector('#sc-message-input')
+        , scSendButton = document.querySelector('#sc-send-button')
+
+    const AppTransportChannel = MermaidAppTransportChannel()
+
+    AppTransportChannel.on('connect', () => {
+      cbSendButton.addEventListener('click', () => {
+        const value = cbMessageInput.value
+        AppTransportChannel.writeData({
+          platform: 'Chaturbate',
+          value
+        })
+      })
+
+      bcSendButton.addEventListener('click', () => {
+        const value = bcMessageInput.value
+        AppTransportChannel.writeData({
+          platform: 'BongaCams',
+          value
+        })
+      })
+
+      xhlSendButton.addEventListener('click', () => {
+        const value = xhlMessageInput.value
+        AppTransportChannel.writeData({
+          platform: 'xHamsterLive',
+          value
+        })
+      })
+
+      scSendButton.addEventListener('click', () => {
+        const value = scMessageInput.value
+        AppTransportChannel.writeData({
+          platform: 'Stripchat',
+          value
+        })
+      })
+
+      AppTransportChannel.on('readData', async ({ type, data }) => {
+        if (type === 'voice') {
+
+        }
+
+        if (type === 'reload') {
+          localStorage.clear()
+          window.location.reload()
+        }
+      })
+    })
+  </script>
+</body>
+</html>
