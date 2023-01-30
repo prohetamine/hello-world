@@ -4,13 +4,6 @@ const AppChannel            = require('node-mermaid/store/app-channel')()
 
 AppChannel.on('connect', () => {
   AppTransportChannel.on('connect', () => {
-    /*AppChannel.on('data', data => {
-      parser.Chaturbate(data, voiceMessage)
-      parser.xHamsterLive(data, voiceMessage)
-      parser.Stripchat(data, voiceMessage)
-      parser.BongaCams(data, voiceMessage)
-    })*/
-
     AppChannel.on('reload', () => {
       AppTransportChannel.writeData({
         type: 'reload'
