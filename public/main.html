@@ -33,63 +33,62 @@
     <input type="text" id="sc-message-input" />
     <button type="button" id="sc-send-button">send</button>
   </div>
-
   <script>
-    const cbMessageInput = document.querySelector('#cb-message-input')
-        , cbSendButton = document.querySelector('#cb-send-button')
-        , bcMessageInput = document.querySelector('#bc-message-input')
-        , bcSendButton = document.querySelector('#bc-send-button')
-        , xhlMessageInput = document.querySelector('#xhl-message-input')
-        , xhlSendButton = document.querySelector('#xhl-send-button')
-        , scMessageInput = document.querySelector('#sc-message-input')
-        , scSendButton = document.querySelector('#sc-send-button')
+    const init = () => {
+      const cbMessageInput = document.querySelector('#cb-message-input')
+          , cbSendButton = document.querySelector('#cb-send-button')
+          , bcMessageInput = document.querySelector('#bc-message-input')
+          , bcSendButton = document.querySelector('#bc-send-button')
+          , xhlMessageInput = document.querySelector('#xhl-message-input')
+          , xhlSendButton = document.querySelector('#xhl-send-button')
+          , scMessageInput = document.querySelector('#sc-message-input')
+          , scSendButton = document.querySelector('#sc-send-button')
 
-    const AppTransportChannel = MermaidAppTransportChannel()
+      const AppTransportChannel = MermaidAppTransportChannel()
 
-    AppTransportChannel.on('connect', () => {
-      cbSendButton.addEventListener('click', () => {
-        const value = cbMessageInput.value
-        AppTransportChannel.writeData({
-          platform: 'Chaturbate',
-          value
+      AppTransportChannel.on('connect', () => {
+        cbSendButton.addEventListener('click', () => {
+          const value = cbMessageInput.value
+          AppTransportChannel.writeData({
+            platform: 'Chaturbate',
+            value
+          })
+        })
+
+        bcSendButton.addEventListener('click', () => {
+          const value = bcMessageInput.value
+          AppTransportChannel.writeData({
+            platform: 'BongaCams',
+            value
+          })
+        })
+
+        xhlSendButton.addEventListener('click', () => {
+          const value = xhlMessageInput.value
+          AppTransportChannel.writeData({
+            platform: 'xHamsterLive',
+            value
+          })
+        })
+
+        scSendButton.addEventListener('click', () => {
+          const value = scMessageInput.value
+          AppTransportChannel.writeData({
+            platform: 'Stripchat',
+            value
+          })
+        })
+
+        AppTransportChannel.on('readData', async ({ type, data }) => {
+          if (type === 'reload') {
+            localStorage.clear()
+            window.location.reload()
+          }
         })
       })
+    }
 
-      bcSendButton.addEventListener('click', () => {
-        const value = bcMessageInput.value
-        AppTransportChannel.writeData({
-          platform: 'BongaCams',
-          value
-        })
-      })
-
-      xhlSendButton.addEventListener('click', () => {
-        const value = xhlMessageInput.value
-        AppTransportChannel.writeData({
-          platform: 'xHamsterLive',
-          value
-        })
-      })
-
-      scSendButton.addEventListener('click', () => {
-        const value = scMessageInput.value
-        AppTransportChannel.writeData({
-          platform: 'Stripchat',
-          value
-        })
-      })
-
-      AppTransportChannel.on('readData', async ({ type, data }) => {
-        if (type === 'voice') {
-
-        }
-
-        if (type === 'reload') {
-          localStorage.clear()
-          window.location.reload()
-        }
-      })
-    })
+    window.addEventListener('load', init)
   </script>
 </body>
 </html>
